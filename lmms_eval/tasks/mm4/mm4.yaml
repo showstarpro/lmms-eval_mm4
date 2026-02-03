@@ -1,0 +1,34 @@
+dataset_path: /root/lmms-eval/lmms_eval/tasks/mm4/mm4_dataset.py
+task: mm4
+test_split: test
+output_type: generate_until
+doc_to_visual: !function utils.mm4_doc_to_visual
+doc_to_text: !function utils.mm4_doc_to_text
+doc_to_target: !function utils.mm4_doc_to_target
+process_results: !function utils.mm4_process_results
+
+generation_kwargs:
+  max_new_tokens: 10
+  temperature: 0
+  do_sample: false
+
+metric_list:
+  - metric: mm4_avg
+    aggregation: !function utils.mm4_aggregate_by_image
+    higher_is_better: true
+  - metric: mm4_ge_1
+    aggregation: !function utils.mm4_aggregate_ge_1
+    higher_is_better: true
+  - metric: mm4_ge_2
+    aggregation: !function utils.mm4_aggregate_ge_2
+    higher_is_better: true
+  - metric: mm4_ge_3
+    aggregation: !function utils.mm4_aggregate_ge_3
+    higher_is_better: true
+  - metric: mm4_ge_4
+    aggregation: !function utils.mm4_aggregate_ge_4
+    higher_is_better: true
+
+metadata:
+  version: 1.0
+  description: "MM4 benchmark - counts images by number of correct answers"
